@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LabelDao">
+	<resultMap type="com.bean.Label" id="LabelMapper">
+		<id property="id" column="laid"/>
+		<result property="name" column="laname"/>
+	</resultMap>
+	<select id="findAll" resultMap="LabelMapper">
+		select laid,laname from label
+	</select>
+	
+</mapper>

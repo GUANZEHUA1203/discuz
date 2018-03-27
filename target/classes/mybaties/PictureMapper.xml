@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "mybatis-3-mapper.dtd">
+<mapper namespace="com.picture.dao">
+	<resultMap type="com.bean.Picture" id="PictureMapper">
+		<id property="id" column="id"/>
+		<result property="preview" column="pic_name"/>
+		<result property="date" column="pic_uploadtime"/>
+	</resultMap>
+	
+	<select id="getRandom" resultMap="PictureMapper">
+		select * from picture order by rand() LIMIT 30
+	</select>
+</mapper>

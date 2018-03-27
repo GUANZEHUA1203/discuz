@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.LoginDao">
+	<resultMap type="com.bean.Login" id="LoignMapper">
+		<id property="id" column="lgid"/>
+		<result property="name" column="lgname"/>
+		<result property="password" column="lgpassword"/>
+		<result property="power" column="lgpower"/>
+		<result property="isdelete" column="isdelete"/>
+	</resultMap>
+	
+	
+	<select id="userlogin" resultMap="LoignMapper">
+		select lgid,lgname,lgpassword,lgpower,isdelete from login where lgname=#{name} and lgpassword=#{password}
+	</select>
+	<insert id="addlogin">
+		insert into login(lgname,lgpassword) value(#{name},#{password})
+	</insert>
+	<update id="updateLogin" parameterType="com.bean.Login">
+		update login set lgpassword=#{lgpassword} where lgid=#{id}
+	</update>
+	<delete id="delete">
+		update login set isdelete="#{isdelete} where lgid=#{id}
+	</delete>
+	<select id="findLogins" resultMap="LoignMapper">
+		select lgid,lgname,lgpassword,lgpower,isdelete from login 
+	</select>
+</mapper>
