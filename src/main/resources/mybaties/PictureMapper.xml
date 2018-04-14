@@ -10,6 +10,6 @@
 	</resultMap>
 	
 	<select id="getRandom" resultMap="PictureMapper">
-		select * from picture order by rand() LIMIT 30
+		select * from tbl_picture order by rand() LIMIT 30
 	</select>
 </mapper>
