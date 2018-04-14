@@ -13,18 +13,18 @@
 	
 	
 	<select id="userlogin" resultMap="LoignMapper">
-		select lgid,lgname,lgpassword,lgpower,isdelete from login where lgname=#{name} and lgpassword=#{password}
+		select lgid,lgname,lgpassword,lgpower,isdelete from tbl_login where lgname=#{name} and lgpassword=#{password}
 	</select>
-	<insert id="addlogin">
-		insert into login(lgname,lgpassword) value(#{name},#{password})
+	<insert id="addlogin" parameterType="com.bean.Login">
+		insert into tbl_login(lgname,lgpassword) value(#{name},#{password})
 	</insert>
-	<update id="updateLogin" parameterType="com.bean.Login">
-		update login set lgpassword=#{lgpassword} where lgid=#{id}
+	<update id="updatelogin" parameterType="com.bean.Login">
+		update tbl_login set lgpassword=#{lgpassword} where lgid=#{id}
 	</update>
 	<delete id="delete">
-		update login set isdelete="#{isdelete} where lgid=#{id}
+		update tbl_login set isdelete="#{isdelete} where lgid=#{id}
 	</delete>
 	<select id="findLogins" resultMap="LoignMapper">
-		select lgid,lgname,lgpassword,lgpower,isdelete from login 
+		select lgid,lgname,lgpassword,lgpower,isdelete from tbl_login 
 	</select>
 </mapper>

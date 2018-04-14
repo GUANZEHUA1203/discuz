@@ -3,12 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "mybatis-3-mapper.dtd">
 <mapper namespace="com.dao.LabelDao">
-	<resultMap type="com.bean.Label" id="LabelMapper">
+	<resultMap type="com.bean.Label" id="labelMapper">
 		<id property="id" column="laid"/>
 		<result property="name" column="laname"/>
 	</resultMap>
-	<select id="findAll" resultMap="LabelMapper">
-		select laid,laname from label
+	<select id="findAll" resultMap="labelMapper">
+		select laid,laname from tbl_label
 	</select>
 	
 </mapper>

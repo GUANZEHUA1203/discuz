@@ -15,15 +15,16 @@
 	
 	<sql id="AticleField">atid,atman,attitle,atdate,atcontext,atlabel,atstate</sql>
 	<insert id="addAticle" parameterType="com.bean.Aticle">
-		insert into aticle(atman,attitle,atcontext,atlabel) value(#{man},#{title},#{context},#{label});
+		insert into tbl_aticle(atman,attitle,atcontext,atlabel) value(#{man},#{title},#{context},#{label});
 	</insert>
 	<select id="findAticle" resultMap="AticleMapper" parameterType="java.util.Map">
-		select <include refid="AticleField"/>from aticle where 1=1
-		<if test="atid!=null">and atid=#{atid}</if>
-		<if test="atman!=null">and atman like "%"#{atman}"%" </if>
-		<if test="attitle!=null">and attitle like "%"#{attitle}"%" </if>
-		<if test="atcontext!=null">and atcontext like "%"#{atcontext}"%" </if>
-		<if test="atlabel!=null">
+		select <include refid="AticleField"/>from tbl_aticle 
+		<where>
+		<if test="atid!=null and atid!=''">and atid=#{atid}</if>
+		<if test="atman!=null and atman!=''">and atman like "%"#{atman}"%" </if>
+		<if test="attitle!=null and attitle!=''">and attitle like "%"#{attitle}"%" </if>
+		<if test="atcontext!=null and atcontext!=''">and atcontext like "%"#{atcontext}"%" </if>
+		<if test="atlabel!=null and atlabel!=''">
 				and atlabel = #{atlabel}
 		</if>
 		<if test="atdate!=''">
@@ -32,6 +33,7 @@
 			<if test="atdate==2">and atdate>DATE_SUB(CURDATE(), INTERVAL 6 MONTH) </if>
 			<if test="atdate==3">and DATE_SUB(CURDATE(), INTERVAL 1 YEAR) > date(atdate) </if>		
 		</if>
+		</where>
 		 ORDER BY atdate
 		<if test="sequence==0">
 			desc
@@ -45,19 +47,14 @@
 	</select>
 	
 	<select id="findCountAticle" resultType="java.lang.Integer" parameterType="java.util.Map">
-		select count(0) from aticle where 1=1
+		select count(0) from tbl_aticle 
+		<where>
 		<if test="atid!=null">and atid=#{atid}</if>
 		<if test="atman!=null">and atman like "%"#{atman}"%" </if>
 		<if test="attitle!=null">and attitle like "%"#{attitle}"%" </if>
 		<if test="atcontext!=null">and atcontext like "%"#{atcontext}"%" </if>
 		<if test="atlabel!=null">
 		and atlabel =#{atlabel}
-			<!-- <if test="atlabel==0">
-			and atlabel = (select laid from label order by rand() LIMIT 1)
-			</if> 
-			<if test="atlabel!=0">
-			</if>
-			-->
 		</if>
 		<if test="atdate!=''">
 			<if test="atdate==0">and atdate>DATE_SUB(CURDATE(), INTERVAL 1 WEEK) </if>
@@ -65,9 +62,10 @@
 			<if test="atdate==2">and atdate>DATE_SUB(CURDATE(), INTERVAL 6 MONTH) </if>
 			<if test="atdate==3">and DATE_SUB(CURDATE(), INTERVAL 1 YEAR) > date(atdate) </if>		
 		</if>
+		</where>
 	</select>
 	<update id="updateAticle">
-	update aticle set atid=atid
+	update tbl_aticle set atid=atid
 		<if test="atman!=null">,atman=#{atman}</if>
 		<if test="attitle!=null">,attitle=#{attitle}</if>
 		<if test="atcontext!=null">,atcontext=#{atcontext}</if>
@@ -76,15 +74,15 @@
 		<if test="atid!=null">where atid=#{atid}</if>
 	</update>
 	<delete id="deleteAticle">
-	 delete from aticle where atid=#{id}
+	 delete from tbl_aticle where atid=#{id}
 	</delete>
 	<select id="paginationAticle" resultMap="AticleMapper">
-		select <include refid="AticleField"/> from aticle limit #{0},#{1}
+		select <include refid="AticleField"/> from tbl_aticle limit #{0},#{1}
 	</select>
 	<select id="findAticles" resultMap="AticleMapper">
-		select <include refid="AticleField"/> from aticle
+		select <include refid="AticleField"/> from tbl_aticle
 	</select>
 	<select id="findMaxId" resultType="int">
-		SELECT max(tid) from pre_forum_thread
+		SELECT max(tid) from tbl_aticle
 	</select>
 </mapper>
