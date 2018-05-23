@@ -43,7 +43,7 @@
 		p:connection-factory-ref="connectionFactory" p:defaultSerializer-ref="stringRedisSerializer"
 		p:enableTransactionSupport="true" />
 	<!-- redis setting end -->
-	<bean id="baseRedisService" class="com.util.redis.BaseRedisService"></bean>
+	<bean id="redisManager" class="com.common.RedisManager"></bean>
 	
 
 

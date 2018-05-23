@@ -11,7 +11,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,20 +19,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bean.Aticle;
 import com.bean.Label;
 import com.bean.Login;
+import com.common.BaseRedisCache;
 import com.google.gson.Gson;
 import com.services.AticleServices;
 import com.services.LabelServices;
 import com.util.StringUtil;
-import com.util.redis.BaseRedisService;
 import com.util.webUtil.paramUtil;
 @Controller
-public class AticleController {
+public class AticleController extends BaseRedisCache{
 	@Resource
 	private AticleServices aticleServices;
 	@Resource
 	private LabelServices labelService;
-	@Autowired
-	private BaseRedisService baseRedisService;
 	
 	
 	@RequestMapping("fabiao")
@@ -110,8 +107,8 @@ public class AticleController {
 		Map<String, Object> requestParameter = paramUtil.getRequestParameter(request, response);
 		requestParameter.put("path", request.getContextPath());
 		int hashCode = requestParameter.hashCode();
-		if(baseRedisService.get(StringUtil.getString(hashCode))!=null) {
-			return baseRedisService.get(StringUtil.getString(hashCode));
+		if(getObject(StringUtil.getString(hashCode))!=null) {
+			return (String) getObject(StringUtil.getString(hashCode));
 		}
 		
 		Map<String, Object> map=new HashMap<String, Object>();
@@ -146,8 +143,7 @@ public class AticleController {
 		//表示是否为多条件判断
 		mapjson.put("isselect", "yes");
 		json2 = gson.toJson(mapjson);
-		baseRedisService.set(StringUtil.getString(hashCode), json2);
-		baseRedisService.expire(StringUtil.getString(hashCode), baseRedisService.TIME_EXPRIRE);
+		save(StringUtil.getString(hashCode),json2);
 	}catch(Exception e){
 		return "error.jsp";
 	}

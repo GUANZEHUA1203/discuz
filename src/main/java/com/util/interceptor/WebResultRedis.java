@@ -11,15 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.util.redis.BaseRedisService;
 
 
 @Component
 @Aspect
 @Order(99)
 public class WebResultRedis {
-	@Autowired
-	private BaseRedisService baseRedisService;
 	// 配置切入点,该方法无方法体,主要为方便同类中其他方法使用此处配置的切入点
 	@Pointcut("public * *(..)")
 	public void aspect() {}

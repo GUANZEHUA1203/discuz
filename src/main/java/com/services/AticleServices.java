@@ -18,4 +18,6 @@ public interface AticleServices {
 	  * 按条件查看总数
 	  */
 	public int findCountAticle(Map<String, Object> map);
+	
+	public void insertBatch(List<Aticle> aticles);
 }

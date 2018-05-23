@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.bean.Aticle;
 
+import net.coderbee.mybatis.batch.BatchParameter;
+
 public interface AticleDao {
 	/*
 	 * 发文章
@@ -41,4 +43,8 @@ public interface AticleDao {
 	  * 按条件查看总数
 	  */
 	public int findCountAticle(Map<String, Object> map);
+	
+	public void batchInsert(BatchParameter<Aticle> aticles);
+	
+	public void batchInsertByUnion(List<Aticle> aticles);
 }
