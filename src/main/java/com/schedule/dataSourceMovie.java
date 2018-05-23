@@ -131,8 +131,8 @@ public class dataSourceMovie {
 			Thread.sleep(8000L);
 			downinfo(url);
 		}
-		String baidupanpath = "����������";
-		String text = "* ";
+		String baidupanpath = "网盘地址下载(address):";
+		String text = "  !^>>^! ";
 		String text2 = "^_^";
 		if (parse != null) {
 			Elements baiduPanLink = parse.select("#google-ads a[href]");
