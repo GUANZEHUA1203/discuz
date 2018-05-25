@@ -7,6 +7,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jsoup.Connection;
@@ -18,8 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class dataSourceAllAticle
 {
-  @Autowired
-  private static SqlSessionFactory sqlSessionFactory;
+  @Resource
+  private SqlSessionFactory sqlsessionfactory;
   
   public static List<String> rusltAnser = new ArrayList<String>();
   public static List<String> ipadress = new ArrayList<String>();
@@ -40,7 +43,7 @@ public class dataSourceAllAticle
   
   private static String httpUrl = "http://www.85nian.net/category/";
   
-  public static void getData()
+  public void getData()
   {
     String[] urlName = { "renwu", "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
     int[] pageNum = { 85, 150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
@@ -58,12 +61,14 @@ public class dataSourceAllAticle
         }
         try
         {
+          System.out.println("path"+path);
           List<String> rusltAnser = getAnser(path, 2);
           for (String string : rusltAnser)
           {
-        	  SqlSession openSession = sqlSessionFactory.openSession();
+        	SqlSession openSession = this.sqlsessionfactory.openSession();
             String[] split = string.split("password");
             String sql = "INSERT INTO `tbl_aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','" + ElementsUtil.delDom(split[0]) + "', '" + ElementsUtil.delDom(split[1]) + "', now(), '8', '0')";
+            System.out.println(sql);
             new SqlMapper(openSession).insert(sql);
             openSession.close();
           }
