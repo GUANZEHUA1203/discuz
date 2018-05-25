@@ -31,13 +31,13 @@ public class Pashujuxiaohua
   @Resource
   private SqlSessionFactory sqlsessionfactory;
   private static int pagenum = 2;
+  public static int countPage=10;
   public static List<String> rusltAnser = new ArrayList();
   public static List<String> rusltTitle = new ArrayList();
   public static List<String> rusltSql = new ArrayList();
   public static Random rand = new Random();
   
-  public  List<String> getData()
-  {
+  public  List<String> getData(){
     String[] urlPaht = {
       "http://www.jokeji.cn/list29_", 
       "http://www.jokeji.cn/list13_", 
@@ -87,22 +87,24 @@ public class Pashujuxiaohua
       "http://www.jokeji.cn/list26_", 
       "http://www.jokeji.cn/hot.asp?me_page=" };
     
-    String[] arrayOfString1 = urlPaht;int j = urlPaht.length;
-    for (int i = 0; i < j; i++)
-    {
+    String[] arrayOfString1 = urlPaht;
+    int j = urlPaht.length;
+    for (int i = 0; i < j; i++){
       String string = arrayOfString1[i];
-      boolean flag = true;
-      while (flag)
-      {
+      while (pagenum<countPage){
         String url = string + pagenum + ".htm";
         try {
-			flag = testUrlWithTimeOut(url, 5000);
-	        if (flag) {
-	        	System.out.println("url************************" + url);
-	            getAnser(url);
-	            pagenum += 1;
-	        }
-        	Thread.sleep(rand.nextInt(200) + 5000);
+//        	获取总页数
+        	if(pagenum==2){
+        		countPage = getCount(url);
+        	}
+        	System.out.println("url************************" + url);
+	        getAnser(url);//获取内容
+            pagenum ++ ;
+            if(pagenum==countPage-1){
+            	pagenum=2;
+            	break;
+            }
         } catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,11 +113,6 @@ public class Pashujuxiaohua
     return rusltSql;
   }
   
-  
-  public static void main(String[] args) {
-	  Pashujuxiaohua pashujuxiaohua = new Pashujuxiaohua();
-	  pashujuxiaohua.getData();
-  }
   public  void getAnser(String url)
     throws IOException, InterruptedException
   {
@@ -139,6 +136,24 @@ public class Pashujuxiaohua
     }
   }
   
+  //获取总页数
+  public int getCount(String url){
+		try {
+			Document document = Jsoup.connect(url).userAgent("Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0; BIDUBrowser 2.x)").timeout(5000).get();
+		    Element select = document.select(".next_page a").last();
+		    String attr = select.attr("abs:href");
+		    if(attr.indexOf("_")>0&&attr.lastIndexOf(".")>0){
+			    int indexOf = attr.indexOf("_");
+			    int indexOf2 = attr.lastIndexOf(".");
+			    String substring = attr.substring(indexOf+1,indexOf2);
+			    System.out.println("substring"+substring);
+			    return Integer.parseInt(substring);
+		    }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return 30;
+  }
   public static List<String> getInfo(String url, String reg)
     throws IOException, InterruptedException
   {
