@@ -24,11 +24,13 @@ public class dataSourceMovie {
 			e.printStackTrace();
 		}
 	}
-
+	/*
+	 * 爬取http://www.friok.com  首页数据 （2页） 
+	 */
 	public static List<String> addDateMain() {
 		List<String> sqlList = new ArrayList();
 		String url;
-		for (int j = 1; j < 5; j++) {
+		for (int j = 1; j < 3; j++) {
 			url = "";
 			url = "http://www.friok.com/page/" + j;
 			try {
@@ -135,7 +137,9 @@ public class dataSourceMovie {
 		String text = "  !^>>^! ";
 		String text2 = "^_^";
 		if (parse != null) {
-			Elements baiduPanLink = parse.select("#google-ads a[href]");
+			Elements baiduPanLink = null;
+//			baiduPanLink=parse.select("#google-ads a[href]");
+			baiduPanLink = parse.select(".list a[href]");
 			baidupanpath = baidupanpath + baiduPanLink.attr("abs:href");
 			Elements answer = parse.select(".desc");
 			Elements title = answer.select("p:eq(1)");
