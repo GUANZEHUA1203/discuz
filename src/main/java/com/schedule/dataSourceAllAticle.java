@@ -26,7 +26,6 @@ public class dataSourceAllAticle
   
   public static List<String> rusltAnser = new ArrayList<String>();
   public static List<String> ipadress = new ArrayList<String>();
-  public static List<String> rusltsql = new ArrayList<String>();
   public static Random rand = new Random();
   
   static
@@ -45,10 +44,12 @@ public class dataSourceAllAticle
   
   public void getData()
   {
-    String[] urlName = { "renwu", "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
-    int[] pageNum = { 85, 150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
+    String[] urlName = { "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
+    int[] pageNum = {  150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
+//    String[] urlName = { "renwu", "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
+//    int[] pageNum = { 85, 150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
     for (int n = 0; n < urlName.length - 1; n++) {
-      for (int i = 1; i < pageNum[n] - 2; i++)
+      for (int i = 2; i < pageNum[n] - 2; i++)
       {
         String path = null;
         if (i == 1)
