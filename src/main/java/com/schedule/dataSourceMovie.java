@@ -30,7 +30,7 @@ public class dataSourceMovie {
 	public static List<String> addDateMain() {
 		List<String> sqlList = new ArrayList();
 		String url;
-		for (int j = 1; j < 3; j++) {
+		for (int j = 1; j < 5; j++) {
 			url = "";
 			url = "http://www.friok.com/page/" + j;
 			try {
