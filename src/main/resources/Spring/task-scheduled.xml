@@ -15,9 +15,9 @@
 	 <bean id="xiaohuaData" class="com.schedule.Pashujuxiaohua"></bean>
 
 	 <task:scheduled-tasks>
-		<!-- <task:scheduled ref="autoAddData" method="autoAddMovieData" cron="0 0 1 * * ?"/> -->
+		 <task:scheduled ref="autoAddData" method="autoAddMovieData" cron="0 15 1 1,4,7,9,12,15,18,20,25,28 * ?"/> 
 		<!--0 15 1 ? * MON  --><!--  * * * * * ?-->
-		<task:scheduled ref="xiaohuaData" method="getData" cron="0 5 11 25 5 ?"/><!-- 只执行一次 -->
+		<task:scheduled ref="xiaohuaData" method="getData" cron="0 25 11 25 5 ?"/><!-- 只执行一次 -->
 	 </task:scheduled-tasks>   
 	
 </beans>
