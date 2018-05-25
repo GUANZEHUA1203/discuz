@@ -91,7 +91,7 @@ public class Pashujuxiaohua
     int j = urlPaht.length;
     for (int i = 0; i < j; i++){
       String string = arrayOfString1[i];
-      while (pagenum<countPage){
+      while (pagenum<=countPage){
         String url = string + pagenum + ".htm";
         try {
 //        	获取总页数
