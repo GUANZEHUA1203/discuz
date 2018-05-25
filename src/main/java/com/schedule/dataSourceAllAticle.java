@@ -54,10 +54,8 @@ public class dataSourceAllAticle
         }
         else
         {
-          System.out.println("next Data ready");
           path = httpUrl + urlName[n] + "/page/" + i;
         }
-        System.out.println(path);
         try
         {
           List<String> rusltAnser = getAnser(path, 2);
@@ -65,7 +63,7 @@ public class dataSourceAllAticle
           {
         	  SqlSession openSession = sqlSessionFactory.openSession();
             String[] split = string.split("password");
-            String sql = "INSERT INTO `aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','" + ElementsUtil.delDom(split[0]) + "', '" + ElementsUtil.delDom(split[1]) + "', now(), '8', '0')";
+            String sql = "INSERT INTO `tbl_aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','" + ElementsUtil.delDom(split[0]) + "', '" + ElementsUtil.delDom(split[1]) + "', now(), '8', '0')";
             new SqlMapper(openSession).insert(sql);
             openSession.close();
           }
@@ -73,7 +71,6 @@ public class dataSourceAllAticle
         }
         catch (Exception e)
         {
-          System.err.println("getData Fail");
           e.printStackTrace();
         }
       }
@@ -111,7 +108,6 @@ public class dataSourceAllAticle
     }
     catch (Exception e)
     {
-      System.out.println("sleep..........");
       Thread.sleep(rand.nextInt(500) + 1000);
       getInfo(url, reg);
     }
@@ -142,7 +138,6 @@ public class dataSourceAllAticle
     }
     catch (Exception e)
     {
-      System.out.println("sleep..........");
       Thread.sleep(rand.nextInt(5000) + 500);
       downinfo(url);
     }

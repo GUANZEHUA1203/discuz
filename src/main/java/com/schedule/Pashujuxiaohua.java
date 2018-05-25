@@ -5,26 +5,38 @@ import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Resource;
+import javax.naming.spi.DirStateFactory.Result;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class pashujuxiaohua
+import com.util.SqlMapper;
+public class Pashujuxiaohua
 {
+	
+  @Resource
+  private SqlSessionFactory sqlsessionfactory;
   private static int pagenum = 2;
   public static List<String> rusltAnser = new ArrayList();
   public static List<String> rusltTitle = new ArrayList();
   public static List<String> rusltSql = new ArrayList();
   public static Random rand = new Random();
   
-  public static List<String> getData()
-    throws IOException, InterruptedException
+  public  List<String> getData()
   {
     String[] urlPaht = {
       "http://www.jokeji.cn/list29_", 
@@ -83,20 +95,28 @@ public class pashujuxiaohua
       while (flag)
       {
         String url = string + pagenum + ".htm";
-        flag = testUrlWithTimeOut(url, 5000);
-        if (flag)
-        {
-          getAnser(url);
-          System.out.println("url" + url);
-          pagenum += 1;
-        }
-        Thread.sleep(rand.nextInt(200) + 5000);
+        try {
+			flag = testUrlWithTimeOut(url, 5000);
+	        if (flag) {
+	        	System.out.println("url************************" + url);
+	            getAnser(url);
+	            pagenum += 1;
+	        }
+        	Thread.sleep(rand.nextInt(200) + 5000);
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
       }
     }
     return rusltSql;
   }
   
-  public static void getAnser(String url)
+  
+  public static void main(String[] args) {
+	  Pashujuxiaohua pashujuxiaohua = new Pashujuxiaohua();
+	  pashujuxiaohua.getData();
+  }
+  public  void getAnser(String url)
     throws IOException, InterruptedException
   {
     List<String> link1 = getInfo(url, ".list_title ul li b a");
@@ -107,14 +127,14 @@ public class pashujuxiaohua
           downinfo(string);
         }
       }
-      System.out.println("��������****");
       if (rusltAnser != null) {
         for (int i = 0; i < rusltAnser.size(); i++)
         {
-          String sql1 = "INSERT INTO `aticle` (`atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ('admin', '" + (String)rusltTitle.get(i) + "', '" + (String)rusltAnser.get(i) + "', sysdate, '����', '0');";
-          System.out.println(sql1);
+          String sql1 = "INSERT INTO `tbl_aticle` (`atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ('admin', '" + (String)rusltTitle.get(i) + "', '" + (String)rusltAnser.get(i) + "', now(), '11', '0');";
           rusltSql.add(sql1);
         }
+        insertSQL(rusltSql);
+        rusltSql=null;//清空SQL
       }
     }
   }
@@ -122,7 +142,6 @@ public class pashujuxiaohua
   public static List<String> getInfo(String url, String reg)
     throws IOException, InterruptedException
   {
-    System.out.println("url" + url);
     List<String> result = new ArrayList();
     Document parse = null;
     try
@@ -156,13 +175,12 @@ public class pashujuxiaohua
     throws IOException, InterruptedException
   {
     List<String> firstLink = new ArrayList();
-    System.out.println(url);
     Document parse = null;
     try
     {
       try
       {
-        Pattern p = Pattern.compile("[��-��]");
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
         Matcher m = p.matcher(url);
         if (testUrlWithTimeOut(url, 5000))
         {
@@ -206,25 +224,28 @@ public class pashujuxiaohua
   public static boolean testUrlWithTimeOut(String urlString, int timeOutMillSeconds)
     throws InterruptedException
   {
-    long lo = System.currentTimeMillis();
     try
     {
       URL url = new URL(urlString);
       URLConnection co = url.openConnection();
       co.setConnectTimeout(timeOutMillSeconds);
       co.connect();
-      System.out.println("��������");
-      System.out.println(System.currentTimeMillis() - lo);
       return true;
     }
     catch (Exception e1)
     {
-      Thread.sleep(rand.nextInt(200) + 5000);
-      System.out.println("����������!");
-      URL url = null;
-      pagenum = 2;
-      System.out.println(System.currentTimeMillis() - lo);
+    	return false;
     }
-    return false;
+  }
+  
+  
+  public void insertSQL(List<String> rusltSql){
+	  if(rusltSql!=null&&rusltSql.size()>0){
+		  SqlSession openSession = this.sqlsessionfactory.openSession();
+			for (String string : rusltSql) {
+				new SqlMapper(openSession).insert(string);
+			}
+		  openSession.close();
+	  }
   }
 }

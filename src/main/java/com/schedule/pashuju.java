@@ -74,7 +74,7 @@ public class pashuju {
 			if(indexOf>0&&indexOf>0){
 				title=str.substring(indexOf,indexOf2);
 			}
-			String sql2="INSERT INTO `aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','"+split[1]+"', '"+split[0]+split[2]+"', now(), '电影', '0');";
+			String sql2="INSERT INTO `tbl_aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','"+split[1]+"', '"+split[0]+split[2]+"', now(), '电影', '0');";
 			sqlList.add(sql2);
 			System.out.println(sql2);
 		}
