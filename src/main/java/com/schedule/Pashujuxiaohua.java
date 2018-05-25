@@ -134,7 +134,7 @@ public class Pashujuxiaohua
           rusltSql.add(sql1);
         }
         insertSQL(rusltSql);
-        rusltSql=null;//清空SQL
+        rusltSql.clear();//清空SQL
       }
     }
   }
@@ -241,11 +241,11 @@ public class Pashujuxiaohua
   
   public void insertSQL(List<String> rusltSql){
 	  if(rusltSql!=null&&rusltSql.size()>0){
-		  SqlSession openSession = this.sqlsessionfactory.openSession();
-			for (String string : rusltSql) {
-				new SqlMapper(openSession).insert(string);
-			}
-		  openSession.close();
+//		  SqlSession openSession = this.sqlsessionfactory.openSession();
+//			for (String string : rusltSql) {
+//				new SqlMapper(openSession).insert(string);
+//			}
+//		  openSession.close();
 	  }
   }
 }
