@@ -39,7 +39,7 @@ public class Pashujuxiaohua
   
   public  List<String> getData(){
     String[] urlPaht = {
-      "http://www.jokeji.cn/list29_", 
+    /*  "http://www.jokeji.cn/list29_", */
       "http://www.jokeji.cn/list13_", 
       "http://www.jokeji.cn/list43_", 
       "http://www.jokeji.cn/list5_", 
