@@ -56,7 +56,6 @@ public class dataSourceMovie {
 			String sql2 = "INSERT INTO `tbl_aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','"
 					+ split[1] + "', '" + split[0] + split[2] + "', now(), '1', '0');";
 			sqlList.add(sql2);
-			System.out.println(sql2);
 		}
 		tid += 1;
 		for (int m = 0; m < rusltAnser.size(); m++) {

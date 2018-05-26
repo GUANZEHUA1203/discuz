@@ -28,7 +28,6 @@ public class ChatSocket {
 	public void open(Session session){
 		try{
 		String queryString = session.getQueryString();
-		System.out.println(queryString);
 		username=queryString.split("=")[1];
 		
 		this.names.add(username);

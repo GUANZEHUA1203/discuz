@@ -72,7 +72,6 @@ public class dataSourceAticleWeek {
 			String[] split = string.split("password");
 			String sql = "INSERT INTO `tbl_aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','"
 					+ ElementsUtil.delDom(split[0]) + "', '" + ElementsUtil.delDom(split[1]) + "', now(), '8', '0')";
-			System.out.println(sql);
 			rusltsql.add(sql);
 		}
 		return rusltsql;

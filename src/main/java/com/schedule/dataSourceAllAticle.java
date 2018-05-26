@@ -49,7 +49,7 @@ public class dataSourceAllAticle
 //    String[] urlName = { "renwu", "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
 //    int[] pageNum = { 85, 150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
     for (int n = 0; n < urlName.length - 1; n++) {
-      for (int i = 2; i < pageNum[n] - 2; i++)
+      for (int i = 90; i < pageNum[n] - 2; i++)
       {
         String path = null;
         if (i == 1)
@@ -69,7 +69,6 @@ public class dataSourceAllAticle
         	SqlSession openSession = this.sqlsessionfactory.openSession();
             String[] split = string.split("password");
             String sql = "INSERT INTO `tbl_aticle` ( `atman`, `attitle`, `atcontext`, `atdate`, `atlabel`, `atstate`) VALUES ( 'admin','" + ElementsUtil.delDom(split[0]) + "', '" + ElementsUtil.delDom(split[1]) + "', now(), '8', '0')";
-            System.out.println(sql);
             new SqlMapper(openSession).insert(sql);
             openSession.close();
           }

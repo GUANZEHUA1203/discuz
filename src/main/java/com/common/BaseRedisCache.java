@@ -35,7 +35,7 @@ public class BaseRedisCache {
 
 	private static Logger logger = LoggerFactory.getLogger(BaseRedisCache.class);
 	
-	private static final int ATICLE_TIME_OUT=1000*60*60*24*7;//文章缓存时间
+	private static final int ATICLE_TIME_OUT=1000*60*60*5;//文章缓存时间
 	
 	@Autowired
 	private RedisManager redisManager;

@@ -39,7 +39,7 @@ public class Pashujuxiaohua
   
   public  List<String> getData(){
     String[] urlPaht = {
-    /*  "http://www.jokeji.cn/list29_", */
+    /*  "http://www.jokeji.cn/list29_", 
       "http://www.jokeji.cn/list13_", 
       "http://www.jokeji.cn/list43_", 
       "http://www.jokeji.cn/list5_", 
@@ -54,7 +54,7 @@ public class Pashujuxiaohua
       "http://www.jokeji.cn/list18_", 
       "http://www.jokeji.cn/list36_", 
       "http://www.jokeji.cn/list35_", 
-      "http://www.jokeji.cn/list30_", 
+      "http://www.jokeji.cn/list30_", */
       "http://www.jokeji.cn/list2_", 
       "http://www.jokeji.cn/list31_", 
       "http://www.jokeji.cn/list34_", 
@@ -146,7 +146,6 @@ public class Pashujuxiaohua
 			    int indexOf = attr.indexOf("_");
 			    int indexOf2 = attr.lastIndexOf(".");
 			    String substring = attr.substring(indexOf+1,indexOf2);
-			    System.out.println("substring"+substring);
 			    return Integer.parseInt(substring);
 		    }
 		} catch (IOException e) {
