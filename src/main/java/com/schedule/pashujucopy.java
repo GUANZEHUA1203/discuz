@@ -66,7 +66,7 @@ public class pashujucopy {
 		int type[]={2,2,2,45,2,42,43,2,2,2,2};//{2,2,2,2,45,2,42,43,2,2,2,2};
 		
 		for (int i = 0; i <urlName.length; i++) {
-			for (int j =1; j < pageNum[i]; j++) {
+			for (int j =20; j < pageNum[i]; j++) {
 				String url="http://www.friok.com/category/"+urlName[i]+"/";
 				if(j!=1){
 					System.err.println(url+"page/"+j);
@@ -77,12 +77,6 @@ public class pashujucopy {
 				}
 				
 			}
-			}
-			for (int j =1; j < 5; j++) {
-				String url="";
-			    url="http://www.friok.com/page/"+j;
-			    getAnser(url+j,2);
-			    System.out.println(url+j);
 			}
 		return sqlList;
 	}

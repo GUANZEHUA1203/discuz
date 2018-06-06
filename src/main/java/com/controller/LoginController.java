@@ -17,6 +17,13 @@ import com.util.DESUtils;
 public class LoginController {
 	@Resource
 	private LoginServices logoinservices;
+	
+	@RequestMapping("/login")
+	public String login(){
+		return "login.jsp";
+	}
+	
+	
 	@RequestMapping("userlogin")
 	public String userlogin(Login login,Model model,HttpServletRequest req){
 		try{

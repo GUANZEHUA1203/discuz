@@ -1,17 +1,19 @@
 package com.util;
 
+
+
+
 import java.io.Serializable;
 import java.util.List;
 
-import com.alibaba.fastjson.JSONException;
 import lombok.Setter;
-import sun.security.jca.GetInstance;
 
 /**
  * 分页对象. 包含当前页数据及分页信息如总记录数.
  *
  * @author peak
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class PageUtils<T> implements Serializable {
 
 	private static final long serialVersionUID = 3297445200287541862L;
@@ -29,7 +31,7 @@ public class PageUtils<T> implements Serializable {
 
 	// 一页显示的记录数
 	/** The limit. */
-	private int limit = DEFAULT_PAGE_SIZE;
+	private int pageSize = DEFAULT_PAGE_SIZE;
 	// 记录总数
 	/** The total rows. */
 	private long totalRows;
@@ -38,13 +40,13 @@ public class PageUtils<T> implements Serializable {
 	private int pageNo = DEFAULT_PAGE;
 	// 结果集存放List
 	/** The result list. */
-	private List<T> resultList;
+	private List<? extends T> resultList;
 	@Setter
 	private T query;
 
-	public PageUtils(int limit, long totalRows, int pageNo, List<T> resultList) {
+	public PageUtils(int pageSize, long totalRows, int pageNo, List<T> resultList) {
 		super();
-		this.limit = (limit == 0 ? DEFAULT_PAGE_SIZE : limit);
+		this.pageSize = (pageSize == 0 ? DEFAULT_PAGE_SIZE : pageSize);
 		this.totalRows = totalRows;
 		this.pageNo = (pageNo == 0 ? DEFAULT_PAGE : pageNo);
 		this.resultList = resultList;
@@ -53,31 +55,19 @@ public class PageUtils<T> implements Serializable {
 	public PageUtils() {
 	}
 
-	public static <T> PageUtils<T> getInstance(int pageNo,int limit,T query){
+	public static <T> PageUtils<T> getInstance(int pageNo,int pageSize){
 		PageUtils pageUtils = new PageUtils();
 		pageUtils.pageNo = pageNo;
-		pageUtils.limit = limit;
-		pageUtils.query = query;
+		pageUtils.pageSize = pageSize;
 		return pageUtils;
 	}
-
-	/**
-	 * Gets the limit.
-	 *
-	 * @return the limit
-	 */
-	public int getLimit() {
-		return limit;
-	}
-
-	/**
-	 * Sets the limit.
-	 *
-	 * @param limit
-	 *            the new limit
-	 */
-	public void setLimit(int limit) {
-		this.limit = limit;
+	
+	public static <T> PageUtils<T> getInstance(int pageNo,int pageSize,T query){
+		PageUtils pageUtils = new PageUtils();
+		pageUtils.pageNo = pageNo;
+		pageUtils.pageSize = pageSize;
+		pageUtils.query = query;
+		return pageUtils;
 	}
 
 	/**
@@ -85,7 +75,7 @@ public class PageUtils<T> implements Serializable {
 	 *
 	 * @return the result list
 	 */
-	public List<T> getResultList() {
+	public List<? extends T> getResultList() {
 		return resultList;
 	}
 
@@ -95,7 +85,7 @@ public class PageUtils<T> implements Serializable {
 	 * @param resultList
 	 *            the new result list
 	 */
-	public void setResultList(List<T> resultList) {
+	public void setResultList(List<? extends T> resultList) {
 		this.resultList = resultList;
 	}
 
@@ -107,10 +97,10 @@ public class PageUtils<T> implements Serializable {
 	 */
 	public long getTotalPages() {
 		long totalPages;
-		if (totalRows % limit == 0) {
-			totalPages = totalRows / limit;
+		if (totalRows % pageSize == 0) {
+			totalPages = totalRows / pageSize;
 		} else {
-			totalPages = (totalRows / limit) + 1;
+			totalPages = (totalRows / pageSize) + 1;
 		}
 		return totalPages;
 	}
@@ -140,7 +130,11 @@ public class PageUtils<T> implements Serializable {
 	 * @return the offset
 	 */
 	public int getOffset() {
-		return (pageNo - 1) * limit;
+		return (pageNo - 1) * pageSize;
+	}
+
+	public int getLimit() {
+		return pageSize;
 	}
 
 	/**
@@ -149,10 +143,10 @@ public class PageUtils<T> implements Serializable {
 	 * @return the end index
 	 */
 	public long getEndIndex() {
-		if (getOffset() + limit > totalRows) {
+		if (getOffset() + pageSize > totalRows) {
 			return totalRows;
 		} else {
-			return getOffset() + limit;
+			return getOffset() + pageSize;
 		}
 	}
 
@@ -177,20 +171,17 @@ public class PageUtils<T> implements Serializable {
 
 	public boolean hasNextPage() {
 		boolean hasNextPage = false;
-		if ((pageNo * limit) < totalRows) {
+		if ((pageNo * pageSize) < totalRows) {
 			hasNextPage = true;
 		}
 		return hasNextPage;
 	}
 
-	public String toJSONString() {
-		try {
-			String resultArray = FastJSONUtil.object2json(resultList);
-			return "{\"total\":" + totalRows + ",\"rows\":" + resultArray + "}";
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return "{\"total\":0,\"rows\":[]}";
-		}
+	public int getPageSize() {
+		return pageSize;
+	}
 
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
 	}
 }
