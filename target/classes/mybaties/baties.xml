@@ -6,4 +6,8 @@
  <typeAliases>
  	<package name="com.bean"/>
  </typeAliases>
+   <plugins>
+		<plugin interceptor="net.coderbee.mybatis.batch.BatchParameterHandler" />
+		<plugin interceptor="net.coderbee.mybatis.batch.BatchStatementHandler" />
+	</plugins>
 </configuration>

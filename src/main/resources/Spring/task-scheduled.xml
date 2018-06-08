@@ -11,13 +11,26 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+		
 	 <bean id="autoAddData" class="com.services.impl.AticleServicesImpl"></bean>
+	 
 	 <bean id="xiaohuaData" class="com.schedule.Pashujuxiaohua"></bean>
+	 
+	 <bean id="allAticle" class="com.schedule.dataSourceAllAticle"></bean>
+	 
+	 <bean id="pashujubaidupan"  class="com.schedule.pashujucopy"></bean>
 
 	 <task:scheduled-tasks>
+	 
 		 <task:scheduled ref="autoAddData" method="autoAddMovieData" cron="0 15 1 1,4,7,9,12,15,18,20,25,28 * ?"/> 
 		<!--0 15 1 ? * MON  --><!--  * * * * * ?-->
-		<task:scheduled ref="xiaohuaData" method="getData" cron="0 25 11 25 5 ?"/><!-- 只执行一次 -->
+		
+		<task:scheduled ref="xiaohuaData" method="getData" cron="0 05 16 25 5 ?"/><!-- 只执行一次 -->
+		
+		<!-- <task:scheduled ref="allAticle" method="getData" cron="0 10 15 25 5 ?"/> --><!-- 只执行一次 -->
+		<task:scheduled ref="pashujubaidupan" method="addDateMain" cron="0 10 15 25 5 ?"/>
+		
+		
 	 </task:scheduled-tasks>   
 	
 </beans>

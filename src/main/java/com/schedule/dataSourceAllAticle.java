@@ -1,9 +1,6 @@
 package com.schedule;
 
-import com.util.ElementsUtil;
-import com.util.SqlMapper;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,12 +9,15 @@ import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.util.ElementsUtil;
+import com.util.SqlMapper;
 
 public class dataSourceAllAticle
 {
@@ -39,13 +39,13 @@ public class dataSourceAllAticle
       e.printStackTrace();
     }
   }
-  
+//  记录：pathhttp://www.85nian.net/category/meiwen/page/117
   private static String httpUrl = "http://www.85nian.net/category/";
-  
+  @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
   public void getData()
   {
-    String[] urlName = { "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
-    int[] pageNum = {  150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
+    String[] urlName = {   "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
+    int[] pageNum = {  137, 92, 126, 166, 27, 79, 170, 199, 306 };
 //    String[] urlName = { "renwu", "rensheng", "xinling", "qinggan", "chengzhang", "chushi", "shiye", "meiwen", "qingchun", "shenghuo", "zhihui", "lehuo", "zuowensucai" };
 //    int[] pageNum = { 85, 150, 105, 168, 137, 92, 126, 166, 27, 79, 170, 199, 306 };
     for (int n = 0; n < urlName.length - 1; n++) {

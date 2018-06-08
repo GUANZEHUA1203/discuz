@@ -14,8 +14,23 @@
 	</resultMap>
 	
 	<sql id="AticleField">atid,atman,attitle,atdate,atcontext,atlabel,atstate</sql>
-	<insert id="addAticle" parameterType="com.bean.Aticle">
+	<sql id="insertSql">
 		insert into tbl_aticle(atman,attitle,atcontext,atlabel) value(#{man},#{title},#{context},#{label});
+	</sql>
+	<insert id="addAticle" parameterType="com.bean.Aticle">
+		<include refid="insertSql"/>
+	</insert>
+	
+	<insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="net.coderbee.mybatis.batch.BatchParameter">
+		<include refid="insertSql"/>
+	</insert>
+	
+	
+	<insert id="batchInsertByUnion" parameterType="list">
+		insert into tbl_aticle(atman,attitle,atcontext,atlabel) 
+			<foreach collection="list" item="item" index="index" separator="union all" >
+			(select #{item.man,jdbcType=VARCHAR},#{item.title,jdbcType=VARCHAR},#{item.context,jdbcType=VARCHAR},#{item.label,jdbcType=VARCHAR} from dual )
+		</foreach>
 	</insert>
 	<select id="findAticle" resultMap="AticleMapper" parameterType="java.util.Map">
 		select <include refid="AticleField"/>from tbl_aticle 

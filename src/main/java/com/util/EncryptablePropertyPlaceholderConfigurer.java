@@ -39,10 +39,10 @@ public class EncryptablePropertyPlaceholderConfigurer extends PropertyPlaceholde
 	        return Base64.getDecoder().decode(base64Str);
 	    }
 	    public static void main(String[] args) {
-	    	String safeUrlBase64Decode = safeUrlBase64Encode("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&useSSL=false".getBytes());
-	    	System.out.println(safeUrlBase64Decode);
-//	    	byte[] safeUrlBase64Decode = safeUrlBase64Decode("amRiYzpteXNxbDovLzEwMy40NS4xMDEuMTA5OjMzMDYvQm9rZT91c2VVbmljb2RlPXRydWUmY2hhcmFjdGVyRW5jb2Rpbmc9VVRGLTgmdXNlU1NMPWZhbHNlJmF1dG9SZWNvbm5lY3Q9dHJ1ZSZmYWlsT3ZlclJlYWRPbmx5PWZhbHNl");
-//	    	System.out.println(new String(safeUrlBase64Decode));
+//	    	String safeUrlBase64Decode = safeUrlBase64Encode("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&useSSL=false".getBytes());
+//	    	System.out.println(safeUrlBase64Decode);
+	    	byte[] safeUrlBase64Decode = safeUrlBase64Decode("amRiYzpteXNxbDovLzEwMy40NS4xMDEuMTA5OjQ0MDYvdGVzdD91c2VVbmljb2RlPXRydWUmY2hhcmFjdGVyRW5jb2Rpbmc9dXRmLTgmemVyb0RhdGVUaW1lQmVoYXZpb3I9Y29udmVydFRvTnVsbCZ0cmFuc2Zvcm1lZEJpdElzQm9vbGVhbj10cnVlJnVzZVNTTD1mYWxzZQ");
+	    	System.out.println(new String(safeUrlBase64Decode));
 	    }
 	    
 		    
