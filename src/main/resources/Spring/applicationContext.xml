@@ -14,5 +14,7 @@
 	<import resource="spring-datasource.xml" />
 	<import resource="task-scheduled.xml" />
 	<import resource="spring-redis.xml" />
+	<import resource="spring-servlet.xml"/>
+	<import resource="task-scheduled.xml"/>
 	
 </beans>
