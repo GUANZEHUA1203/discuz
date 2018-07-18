@@ -62,7 +62,7 @@
 	</select>
 	
 	<select id="findCountAticle" resultType="java.lang.Integer" parameterType="java.util.Map">
-		select count(0) from tbl_aticle 
+		select COUNT(DISTINCT atid) from tbl_aticle 
 		<where>
 		<if test="atid!=null">and atid=#{atid}</if>
 		<if test="atman!=null">and atman like "%"#{atman}"%" </if>

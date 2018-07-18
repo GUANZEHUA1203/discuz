@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,9 @@ import com.util.StringUtil;
 import com.util.webUtil.paramUtil;
 @Controller
 public class AticleController extends BaseRedisCache{
+	
+	
+	private static Logger log = LoggerFactory.getLogger(AticleController.class);
 	@Resource
 	private AticleServices aticleServices;
 	@Resource
@@ -61,14 +66,17 @@ public class AticleController extends BaseRedisCache{
 			map.clear();
 			Map<String, Object> resultmap=new HashMap<String, Object>();
 			map.clear();
-			map.put("atman", name);
 			map.put("pn", pn*px);
 			map.put("px", px);
 			map.put("sequence", sequence==null?0:sequence);
+			Date data=new Date();
 			List<Aticle> atices = this.aticleServices.selectAticle(map);
+			 long time = new Date().getTime();
+			log.debug("查询时间1"+String.valueOf(time-data.getTime()));
 			int findCountAticle = this.aticleServices.findCountAticle(map);
+			log.debug("查询时间2"+String.valueOf(new Date().getTime()-data.getTime()));
 			List<Label> labels = this.labelService.findAll();
-			
+			log.debug("查询时间3"+String.valueOf(new Date().getTime()-data.getTime()));
 			resultmap.put("count", findCountAticle);
 			resultmap.put("aticles", atices);
 			resultmap.put("labels", labels); 
@@ -101,14 +109,14 @@ public class AticleController extends BaseRedisCache{
 	}
 	@RequestMapping(value="selectAticle",produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String selectAticle(HttpServletRequest request,HttpServletResponse  response, Aticle aticle,String num,Integer pn,Integer px,Integer sequence){
+	public Object selectAticle(HttpServletRequest request,HttpServletResponse  response, Aticle aticle,String num,Integer pn,Integer px,Integer sequence){
 		String json2=null;
 		try{
 		Map<String, Object> requestParameter = paramUtil.getRequestParameter(request, response);
 		requestParameter.put("path", request.getContextPath());
 		int hashCode = requestParameter.hashCode();
 		if(getObject(StringUtil.getString(hashCode))!=null) {
-			return (String) getObject(StringUtil.getString(hashCode));
+			return  getObject(StringUtil.getString(hashCode));
 		}
 		
 		Map<String, Object> map=new HashMap<String, Object>();
